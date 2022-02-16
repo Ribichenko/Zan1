@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace LINQ
 {
@@ -11,16 +10,36 @@ namespace LINQ
     {
         static void Main(string[] args)
         {
-            string[] teams = { "Бавария", "Боруссия", "Реал Мадрид", "Манчестер Сити", "ПСЖ", "Барселона" };
+            var people = new List<Person>()
+            {
+                new Person("Tom", 23),
+                new Person("Bob", 27),
+                new Person("Sam", 29),
+                new Person("Alice",24)
+            };
 
-            var selectedTeams = from t in teams // определяем каждый объект из teams как t
-                                where t.ToUpper().StartsWith("Б") //фильтрация по критерию
-                                orderby t  // упорядочиваем по возрастанию
-                                select t; // выбираем объект
+            var personel = from p in people
+                           select new
+                           {
+                               FirstName = p.Names,
+                               Year = DateTime.Now.Year - p.Ages
+                           };
 
-            foreach (string s in selectedTeams)
-                Console.WriteLine(s);
+            foreach (var p in personel)
+                Console.WriteLine($"{p.FirstName} - {p.Year}");
             Console.ReadLine();
         }
+        class Person
+        {
+            public string Names { get; } 
+            public int Ages { get; }
+            public Person(string name, int age)
+            {
+                Names = name;
+                Ages = age;
+            }
+        }
+
+
     }
 }
